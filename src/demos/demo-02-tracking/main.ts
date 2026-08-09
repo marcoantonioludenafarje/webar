@@ -1,5 +1,6 @@
 import { MetricsService } from "../../core/metrics/MetricsService";
 import { DebugOverlay } from "../../core/metrics/DebugOverlay";
+import { EventLog } from "../../core/metrics/EventLog";
 
 /**
  * Demo 02 — Image Tracking Lab (§11).
@@ -13,12 +14,17 @@ import { DebugOverlay } from "../../core/metrics/DebugOverlay";
  * mindar-image system) stays local to this demo rather than a premature
  * "TrackingService" — it becomes a shared module if/when a second demo
  * needs the same wiring (§5.2).
+ *
+ * EventLog is new here (core/metrics, alongside MetricsService/DebugOverlay)
+ * because mobile testers have no DevTools console — silent failures during
+ * AR init are otherwise invisible on-device. See DebugOverlay's log panel.
  */
 
-type TrackingState = "idle" | "searching" | "found" | "error";
+type TrackingState = "idle" | "loading" | "searching" | "found" | "error";
 
 const metrics = new MetricsService();
-const debugOverlay = new DebugOverlay(metrics, "02 Tracking");
+const log = new EventLog("demo-02");
+const debugOverlay = new DebugOverlay(metrics, "02 Tracking", log);
 
 metrics.set("currentDemo", "02-tracking");
 metrics.set("targetFoundCount", 0);
@@ -40,7 +46,7 @@ app.innerHTML = `
         <div class="card">
           <div class="page-header" style="margin-bottom: 10px;">
             <span class="eyebrow">Image Tracking</span>
-            <span class="status-pill" id="status-pill" data-state="idle">IDLE</span>
+            <span class="status-pill" id="status-pill" data-state="idle">LOADING AR</span>
           </div>
 
           <div class="stat-grid">
@@ -77,7 +83,7 @@ app.innerHTML = `
         </div>
 
         <div class="btn-row">
-          <button class="btn btn-primary" id="btn-start">Start</button>
+          <button class="btn btn-primary" id="btn-start" disabled>Loading…</button>
           <button class="btn btn-danger" id="btn-stop" disabled>Stop</button>
         </div>
         <button class="btn" id="btn-export">Export metrics JSON</button>
@@ -96,9 +102,12 @@ const btnStart = app.querySelector<HTMLButtonElement>("#btn-start")!;
 const btnStop = app.querySelector<HTMLButtonElement>("#btn-stop")!;
 const btnExport = app.querySelector<HTMLButtonElement>("#btn-export")!;
 
-const sceneEl = document.querySelector<HTMLElement & { systems: Record<string, any> }>("#ar-scene")!;
+const sceneEl = document.querySelector<HTMLElement & { systems: Record<string, any>; hasLoaded: boolean }>(
+  "#ar-scene",
+)!;
 const targetEl = document.querySelector<HTMLElement>("#target")!;
 
+log.log("script loaded, waiting for a-scene…");
 debugOverlay.mount();
 metrics.startFpsLoop();
 
@@ -109,7 +118,9 @@ let lostAt = 0;
 let acquiredOnce = false;
 
 function setStatus(state: TrackingState, label: string): void {
-  statusPill.dataset.state = state === "found" ? "ok" : state === "error" ? "error" : state === "searching" ? "pending" : "idle";
+  const pillState =
+    state === "found" ? "ok" : state === "error" ? "error" : state === "searching" ? "pending" : "idle";
+  statusPill.dataset.state = pillState;
   statusPill.textContent = label;
   metrics.set("trackingStatus", label);
 }
@@ -122,6 +133,7 @@ function showError(message: string): void {
     </div>
   `;
   metrics.set("trackingError", message);
+  log.error(message);
 }
 
 function clearError(): void {
@@ -135,18 +147,38 @@ function refreshStats(): void {
 }
 refreshStats();
 
+// Gate Start on the scene actually being ready — clicking before A-Frame has
+// registered the mindar-image system throws, and on a phone with no
+// console that failure was previously invisible.
+function onSceneLoaded(): void {
+  log.log("a-scene loaded, mindar-image system ready");
+  btnStart.disabled = false;
+  btnStart.textContent = "Start";
+  setStatus("idle", "IDLE");
+}
+
+if (sceneEl.hasLoaded) {
+  onSceneLoaded();
+} else {
+  sceneEl.addEventListener("loaded", onSceneLoaded, { once: true });
+}
+
 sceneEl.addEventListener("arReady", () => {
+  log.log("arReady — camera + tracking pipeline initialized");
   clearError();
   searchStartedAt = performance.now();
   setStatus("searching", "SEARCHING");
 });
 
-sceneEl.addEventListener("arError", () => {
+sceneEl.addEventListener("arError", (event) => {
+  const detail = (event as CustomEvent).detail;
+  const detailText = detail ? ` (${JSON.stringify(detail)})` : "";
   showError(
-    "MindAR failed to start the camera/tracking pipeline. Check camera permission and reload.",
+    `MindAR failed to start the camera/tracking pipeline${detailText}. Check camera permission and reload.`,
   );
   setStatus("error", "ERROR");
   btnStart.disabled = false;
+  btnStart.textContent = "Start";
   btnStop.disabled = true;
 });
 
@@ -155,6 +187,7 @@ targetEl.addEventListener("targetFound", () => {
   foundCount += 1;
   statFound.textContent = String(foundCount);
   metrics.set("targetFoundCount", foundCount);
+  log.log(`targetFound (#${foundCount})`);
 
   if (!acquiredOnce) {
     acquiredOnce = true;
@@ -175,6 +208,7 @@ targetEl.addEventListener("targetLost", () => {
   lostCount += 1;
   statLost.textContent = String(lostCount);
   metrics.set("targetLostCount", lostCount);
+  log.log(`targetLost (#${lostCount})`);
 
   setStatus("searching", "SEARCHING");
 });
@@ -182,7 +216,8 @@ targetEl.addEventListener("targetLost", () => {
 btnStart.addEventListener("click", () => {
   clearError();
   btnStart.disabled = true;
-  setStatus("searching", "STARTING");
+  setStatus("loading", "STARTING");
+  log.log("Start clicked — requesting camera via mindar-image-system.start()");
 
   foundCount = 0;
   lostCount = 0;
@@ -200,13 +235,16 @@ btnStart.addEventListener("click", () => {
     showError(err instanceof Error ? err.message : String(err));
     setStatus("error", "ERROR");
     btnStart.disabled = false;
+    btnStart.textContent = "Start";
   }
 });
 
 btnStop.addEventListener("click", () => {
+  log.log("Stop clicked");
   sceneEl.systems["mindar-image-system"].stop();
   setStatus("idle", "IDLE");
   btnStart.disabled = false;
+  btnStart.textContent = "Start";
   btnStop.disabled = true;
 });
 

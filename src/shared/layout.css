@@ -203,3 +203,18 @@ body {
 .debug-overlay .debug-key {
   color: var(--text-dim);
 }
+
+.debug-overlay .debug-log {
+  margin-top: 6px;
+  padding-top: 6px;
+  border-top: 1px solid var(--border);
+  max-height: 110px;
+  overflow-y: auto;
+}
+
+.debug-overlay .debug-log-row {
+  white-space: normal;
+  word-break: break-word;
+  color: #9aa7b5;
+  line-height: 1.4;
+}
