@@ -55,12 +55,21 @@ demos remain independently runnable as new ones are added.
 | # | Demo | Status |
 |---|---|---|
 | 01 | Camera Lab | Implemented |
-| 02 | Image Tracking Lab | Not implemented |
+| 02 | Image Tracking Lab | Implemented |
 | 03 | 3D Character Lab | Not implemented |
 | 04 | Interaction Lab | Not implemented |
 | 05 | AR Mini Game | Not implemented |
 | 06 | Business Configuration Lab | Not implemented |
 | 07 | Multi Target Lab | Not implemented |
+
+## Demo 02 — image target
+
+Demo 02 ships with MindAR's own sample target
+(`public/targets/demo-02/card.mind` + printable `card.png`) so the tracking
+flow can be tested immediately. To try your own physical target, compile an
+image at https://hiukim.github.io/mind-ar-js-doc/tools/compile and replace
+`card.mind` (or point `mindar-image="imageTargetSrc: ..."` in
+`src/demos/demo-02-tracking/index.html` at a new file).
 
 ## Recording results
 

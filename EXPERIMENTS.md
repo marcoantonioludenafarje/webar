@@ -7,7 +7,7 @@ Tracks what's implemented and what's been physically validated. See
 | # | Demo | Implemented | Physically Tested | Result Doc |
 |---|---|---|---|---|
 | 01 | Camera Lab | Yes | No | [01-camera.md](./experiment-results/01-camera.md) |
-| 02 | Image Tracking Lab | No | — | — |
+| 02 | Image Tracking Lab | Yes | No | [02-image-tracking.md](./experiment-results/02-image-tracking.md) |
 | 03 | 3D Character Lab | No | — | — |
 | 04 | Interaction Lab | No | — | — |
 | 05 | AR Mini Game | No | — | — |
@@ -39,7 +39,6 @@ Mirrors CLAUDE.md §19. Update only when backed by actual experiment results.
 
 ## Next step
 
-Physically test Demo 01 (Camera Lab) on a real mobile device, fill in
-[experiment-results/01-camera.md](./experiment-results/01-camera.md), then
-decide whether to proceed to Demo 02 per the stop conditions in
-CLAUDE.md §18.
+Physically test Demo 01 (Camera Lab) and Demo 02 (Image Tracking Lab) on a
+real mobile device, fill in their `experiment-results/` files, then decide
+whether to proceed to Demo 03 per the stop conditions in CLAUDE.md §18.

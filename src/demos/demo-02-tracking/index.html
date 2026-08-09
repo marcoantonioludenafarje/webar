@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>WebAR Lab / Tracking</title>
+    <link rel="stylesheet" href="../../shared/layout.css" />
+    <link rel="stylesheet" href="./style.css" />
+
+    <!--
+      A-Frame + MindAR loaded via CDN <script> tags, per their own quickstart
+      docs. MindAR's A-Frame build registers global a-frame components
+      (mindar-image, mindar-image-target) and expects to run as a classic
+      script, not an ES module — bundling it through Vite/npm buys nothing
+      here and adds risk, so we keep it as the two vendor scripts MindAR
+      itself recommends. Pinned versions to avoid silent breakage.
+    -->
+    <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
+  </head>
+  <body>
+    <a-scene
+      id="ar-scene"
+      mindar-image="imageTargetSrc: ../../../targets/demo-02/card.mind; autoStart: false; uiLoading: no; uiScanning: no; uiError: no;"
+      color-space="sRGB"
+      renderer="colorManagement: true, physicallyCorrectLights"
+      vr-mode-ui="enabled: false"
+      device-orientation-permission-ui="enabled: false"
+      embedded
+    >
+      <a-assets></a-assets>
+
+      <a-camera position="0 0 0" look-controls="enabled: false" cursor="fuse: false" raycaster="far: 10000"></a-camera>
+
+      <a-entity id="target" mindar-image-target="targetIndex: 0">
+        <!-- Primitive object per CLAUDE.md §11: cube, not a character. -->
+        <a-box position="0 0.25 0" scale="0.4 0.4 0.4" color="#3fb950" material="opacity: 0.95"></a-box>
+        <a-text value="TARGET FOUND" align="center" position="0 0.55 0" scale="0.6 0.6 0.6" color="#ffffff"></a-text>
+      </a-entity>
+    </a-scene>
+
+    <div id="app"></div>
+    <script type="module" src="./main.ts"></script>
+  </body>
+</html>

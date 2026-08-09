@@ -1,0 +1,77 @@
+/* Demo-02-specific layout: the a-scene renders full-bleed (video + AR
+   canvas), our HTML overlay sits on top, same pattern as Demo 01. */
+
+a-scene {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+.demo-content {
+  position: relative;
+  z-index: 1;
+}
+
+.demo-content .page {
+  min-height: 100vh;
+  min-height: 100dvh;
+  justify-content: space-between;
+  pointer-events: none;
+}
+
+.demo-content .page > * {
+  pointer-events: auto;
+}
+
+.top-section,
+.bottom-section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.bottom-section {
+  padding-bottom: 8px;
+}
+
+.stat-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px 16px;
+}
+
+.stat-grid .stat-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-dim);
+}
+
+.stat-grid .stat-value {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 16px;
+}
+
+.target-hint {
+  font-size: 13px;
+  color: var(--text-dim);
+}
+
+.error-box {
+  border: 1px solid var(--danger);
+  background: rgba(248, 81, 73, 0.1);
+  color: var(--text);
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-size: 13px;
+}
+
+.error-box .error-code {
+  color: var(--danger);
+  font-weight: 700;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  display: block;
+  margin-bottom: 2px;
+}

@@ -13,7 +13,7 @@ interface DemoEntry {
 
 const demos: DemoEntry[] = [
   { number: "01", title: "Camera", path: "./src/demos/demo-01-camera/index.html" },
-  { number: "02", title: "Image Tracking" },
+  { number: "02", title: "Image Tracking", path: "./src/demos/demo-02-tracking/index.html" },
   { number: "03", title: "3D Character" },
   { number: "04", title: "Interaction" },
   { number: "05", title: "AR Game" },
