@@ -1,82 +1,114 @@
 # WebAR Lab
 
-A technical experimentation laboratory for browser-based Augmented Reality
-(WebAR). See [CLAUDE.md](./CLAUDE.md) for the full project brief, stage,
-scope, and per-demo requirements — this README only covers running the code.
+Una exploración técnica de realidad aumentada en el navegador (WebAR),
+parte del índice general en
+[laboratorios](https://marcoantonioludenafarje.github.io/laboratorios/).
+Ver [CLAUDE.md](./CLAUDE.md) para lo específico de este repo,
+[OBJECTIVE.md](./OBJECTIVE.md) para el objetivo final, y
+[ROADMAP.md](./ROADMAP.md) para qué labs existen y en qué orden — este
+README solo cubre cómo correr el código.
 
-This project is in the **technology validation / proof-of-concept** stage.
-It is not a product. See [EXPERIMENTS.md](./EXPERIMENTS.md) for experiment
-status and [experiment-results/](./experiment-results/) for physical test
-evidence.
+Etapa: **validación tecnológica / proof of concept**. No es un producto.
+Ver [docs/findings.md](./docs/findings.md) y [docs/decisions.md](./docs/decisions.md) para lo que ya se sabe.
 
-## Requirements
+## Requisitos
 
-- Node.js 18+ and npm
-- A mobile browser for physical testing (camera demos cannot be meaningfully
-  validated on desktop alone)
-- HTTPS or `localhost` — browsers only grant camera access in secure
-  contexts
+- Node.js 18+ y npm
+- Un navegador móvil para pruebas físicas (los labs de cámara no se
+  validan de forma significativa solo en desktop)
+- HTTPS o `localhost` — los navegadores solo dan acceso a cámara en
+  contextos seguros
 
-## Getting started
+## Empezar
 
 ```bash
 npm install
 npm run dev
 ```
 
-Open the printed local URL. On a phone, use Vite's `--host` flag or the
-network URL Vite prints, and make sure the phone is on the same network:
+Abre la URL local que imprime. Para probar en el celular, usa el flag
+`--host` de Vite y asegúrate de que el celular esté en la misma red:
 
 ```bash
 npm run dev -- --host
 ```
 
-Camera access over a plain `http://<lan-ip>` origin will be blocked by most
-mobile browsers unless it's `localhost`. If needed, use a tunnel (e.g.
-`ngrok`) to get an HTTPS URL for physical device testing.
+El acceso a cámara sobre `http://<ip-de-red>` sin más será bloqueado por
+la mayoría de navegadores móviles a menos que sea `localhost`. Si hace
+falta, usa un túnel (ej. `ngrok`) para tener una URL HTTPS de prueba en
+dispositivo físico.
 
-## Project layout
+## Cómo probar en tu celular (paso a paso, sin saber código)
+
+1. Abre en tu celular: **https://marcoantonioludenafarje.github.io/webar-lab/**
+2. Toca el lab que quieras (`Launch`).
+3. Dale **Start**, acepta el permiso de cámara.
+4. Sigue los "Pasos manuales" de la sección 5 del `README.md` de ese lab
+   (en `labs/mindar-aframe/lab-NN-*/README.md`).
+5. Para labs de tracking (A2+), necesitas la imagen del target en **otra
+   pantalla** o impresa — el link directo está en el README de ese lab.
+6. Cuenta lo que viste — o escríbelo directo en la sección "8. Reflexiones"
+   del README del lab.
+
+No necesitas saber programar para esto — solo seguir los pasos y observar.
+
+## Estructura del proyecto
 
 ```text
-src/
-├── core/          reusable services shared across demos (camera, metrics, ...)
-├── demos/         one folder per experiment, each with its own index.html
-├── launcher/       root launcher page (src/launcher/main.ts, index.html)
-└── shared/        shared CSS layout used by the launcher and every demo
+OBJECTIVE.md          objetivo final, preguntas, visión
+ROADMAP.md             qué labs existen, en qué orden, qué preguntan
+docs/
+  concepts.md           teoría que cruza varios labs
+  findings.md            qué resolvió cada tecnología (al cerrar cada lab)
+  decisions.md            registro de decisiones arquitectónicas
 
-experiment-results/ physical test result docs, one per experiment
+labs/mindar-aframe/       documentación de cada lab (teoría, hipótesis, pasos, reflexiones)
+  lab-01-camera/README.md
+  lab-02-image-tracking/README.md
+  ...
+
+demos-integrales/         documentación de cada demo integral
+  demo-01-business-config/README.md
+  demo-02-multi-target/README.md
+
+src/
+  core/                   servicios reutilizables (camera, metrics, ...)
+  labs/                   código real de cada lab, un HTML entry point cada uno
+  launcher/                página raíz (lista todos los labs/demos)
+  shared/                  CSS compartido
 ```
 
-Each demo is a standalone Vite HTML entry point (see `vite.config.ts`), so
-demos remain independently runnable as new ones are added.
+Cada lab es un entry point HTML independiente de Vite (ver
+`vite.config.ts`), así que los labs ya implementados siguen funcionando
+sin importar qué se agregue después.
 
-## Available experiments
+## Labs disponibles
 
-| # | Demo | Status |
-|---|---|---|
-| 01 | Camera Lab | Implemented |
-| 02 | Image Tracking Lab | Implemented |
-| 03 | 3D Character Lab | Not implemented |
-| 04 | Interaction Lab | Not implemented |
-| 05 | AR Mini Game | Not implemented |
-| 06 | Business Configuration Lab | Not implemented |
-| 07 | Multi Target Lab | Not implemented |
+| Lab | Nombre | Estado | Doc |
+|---|---|---|---|
+| A1 | Camera | Implementado | [labs/mindar-aframe/lab-01-camera](./labs/mindar-aframe/lab-01-camera/) |
+| A2 | Image Tracking | Implementado | [labs/mindar-aframe/lab-02-image-tracking](./labs/mindar-aframe/lab-02-image-tracking/) |
+| A3 | 3D Character | No implementado | [labs/mindar-aframe/lab-03-3d-character](./labs/mindar-aframe/lab-03-3d-character/) |
+| A4 | Interaction | No implementado | [labs/mindar-aframe/lab-04-interaction](./labs/mindar-aframe/lab-04-interaction/) |
+| A5 | AR Game | No implementado | [labs/mindar-aframe/lab-05-ar-game](./labs/mindar-aframe/lab-05-ar-game/) |
+| Demo 1 | Business Configuration | No implementado | [demos-integrales/demo-01-business-config](./demos-integrales/demo-01-business-config/) |
+| Demo 2 | Multi Target | No implementado | [demos-integrales/demo-02-multi-target](./demos-integrales/demo-02-multi-target/) |
 
-## Demo 02 — image target
+## Lab A2 — target de imagen
 
-Demo 02 ships with MindAR's own sample target
-(`public/targets/demo-02/card.mind` + printable `card.png`) so the tracking
-flow can be tested immediately. To try your own physical target, compile an
-image at https://hiukim.github.io/mind-ar-js-doc/tools/compile and replace
-`card.mind` (or point `mindar-image="imageTargetSrc: ..."` in
-`src/demos/demo-02-tracking/index.html` at a new file).
+LAB A2 trae de fábrica el target de ejemplo oficial de MindAR
+(`public/targets/lab-02-image-tracking/card.mind` + `card.png` imprimible)
+para poder probar el flujo de inmediato. Para tu propio target físico,
+compílalo en https://hiukim.github.io/mind-ar-js-doc/tools/compile y
+reemplaza `card.mind` (o apunta `mindar-image="imageTargetSrc: ..."` en
+`src/labs/lab-02-image-tracking/index.html` a un archivo nuevo).
 
-## Recording results
+## Registrar resultados
 
-After physically testing a demo on a real device, fill in the corresponding
-file under `experiment-results/` (start from `TEMPLATE.md` for new demos).
-Do not fabricate results — code running correctly in a browser is not the
-same as validated AR behavior on a phone.
+Tras probar físicamente un lab en un dispositivo real, llena la sección
+"8. Reflexiones del laboratorio" de su `README.md` en `labs/mindar-aframe/`.
+No fabricar resultados — que el código corra en el navegador no es lo
+mismo que una validación AR exitosa en el celular.
 
 ## Build
 

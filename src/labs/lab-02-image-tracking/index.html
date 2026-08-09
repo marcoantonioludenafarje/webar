@@ -21,7 +21,7 @@
   <body>
     <a-scene
       id="ar-scene"
-      mindar-image="imageTargetSrc: ../../../targets/demo-02/card.mind; autoStart: false; uiLoading: no; uiScanning: no; uiError: no;"
+      mindar-image="imageTargetSrc: ../../../targets/lab-02-image-tracking/card.mind; autoStart: false; uiLoading: no; uiScanning: no; uiError: no;"
       color-space="sRGB"
       renderer="colorManagement: true, physicallyCorrectLights"
       vr-mode-ui="enabled: false"
@@ -32,7 +32,7 @@
       <a-camera position="0 0 0" look-controls="enabled: false" cursor="fuse: false" raycaster="far: 10000"></a-camera>
 
       <a-entity id="target" mindar-image-target="targetIndex: 0">
-        <!-- Primitive object per CLAUDE.md §11: cube, not a character. -->
+        <!-- Primitive object per this lab's README: cube, not a character. -->
         <a-box position="0 0.25 0" scale="0.4 0.4 0.4" color="#3fb950" material="opacity: 0.95"></a-box>
         <a-text value="TARGET FOUND" align="center" position="0 0.55 0" scale="0.6 0.6 0.6" color="#ffffff"></a-text>
       </a-entity>

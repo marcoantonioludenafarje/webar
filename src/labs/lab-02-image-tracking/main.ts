@@ -3,17 +3,19 @@ import { DebugOverlay } from "../../core/metrics/DebugOverlay";
 import { EventLog } from "../../core/metrics/EventLog";
 
 /**
- * Demo 02 — Image Tracking Lab (§11).
+ * LAB A2 — Image Tracking (see ./README.md for the full theory/hypothesis/
+ * observations write-up).
  *
  * Validates MindAR image-target detection/tracking. Reuses MetricsService
- * and DebugOverlay as-is from Demo 01 (their second real usage — the
- * abstraction earns its keep per §5.2). Camera access here is owned by
- * MindAR internally, so CameraService is intentionally not involved.
+ * and DebugOverlay as-is from lab-01-camera (their second real usage — the
+ * abstraction earns its keep, see laboratorios/PLAYBOOK.md §5). Camera
+ * access here is owned by MindAR internally, so CameraService is
+ * intentionally not involved.
  *
  * Tracking-specific event wiring (targetFound/targetLost, start/stop of the
- * mindar-image system) stays local to this demo rather than a premature
- * "TrackingService" — it becomes a shared module if/when a second demo
- * needs the same wiring (§5.2).
+ * mindar-image system) stays local to this lab rather than a premature
+ * "TrackingService" — it becomes a shared module if/when a second lab
+ * needs the same wiring.
  *
  * EventLog is new here (core/metrics, alongside MetricsService/DebugOverlay)
  * because mobile testers have no DevTools console — silent failures during
@@ -23,10 +25,10 @@ import { EventLog } from "../../core/metrics/EventLog";
 type TrackingState = "idle" | "loading" | "searching" | "found" | "error";
 
 const metrics = new MetricsService();
-const log = new EventLog("demo-02");
-const debugOverlay = new DebugOverlay(metrics, "02 Tracking", log);
+const log = new EventLog("lab-02");
+const debugOverlay = new DebugOverlay(metrics, "A2 Tracking", log);
 
-metrics.set("currentDemo", "02-tracking");
+metrics.set("currentDemo", "lab-02-image-tracking");
 metrics.set("targetFoundCount", 0);
 metrics.set("targetLostCount", 0);
 
@@ -70,7 +72,7 @@ app.innerHTML = `
 
           <p class="target-hint">
             Point the camera at the MindAR sample card
-            (<code>public/targets/demo-02/card.png</code> — print it or
+            (<code>public/targets/lab-02-image-tracking/card.png</code> — print it or
             display it on another screen). Swap in your own target later by
             compiling one at
             <a href="https://hiukim.github.io/mind-ar-js-doc/tools/compile" target="_blank" rel="noopener">
@@ -249,7 +251,7 @@ btnStop.addEventListener("click", () => {
 });
 
 btnExport.addEventListener("click", () => {
-  metrics.exportJson("demo-02-tracking");
+  metrics.exportJson("lab-02-image-tracking");
 });
 
 // Stop tracking cleanly if the user navigates away mid-session.

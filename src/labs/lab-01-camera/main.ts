@@ -3,18 +3,19 @@ import { MetricsService } from "../../core/metrics/MetricsService";
 import { DebugOverlay } from "../../core/metrics/DebugOverlay";
 
 /**
- * Demo 01 — Camera Lab (§10).
+ * LAB A1 — Camera (see ./README.md for the full theory/hypothesis/
+ * observations write-up).
  *
  * Validates rear-camera access, start/stop lifecycle, and basic camera
- * observability. No tracking/rendering involved — this demo must work
- * standalone, before MindAR/A-Frame are introduced in Demo 02+.
+ * observability. No tracking/rendering involved — this lab works
+ * standalone, before MindAR/A-Frame are introduced in lab-02+.
  */
 
 const camera = new CameraService();
 const metrics = new MetricsService();
-const debugOverlay = new DebugOverlay(metrics, "01 Camera");
+const debugOverlay = new DebugOverlay(metrics, "A1 Camera");
 
-metrics.set("currentDemo", "01-camera");
+metrics.set("currentDemo", "lab-01-camera");
 metrics.set("device", shortDeviceInfo());
 metrics.set("cameraStatus", "idle");
 
@@ -157,7 +158,7 @@ btnStop.addEventListener("click", () => {
 });
 
 btnExport.addEventListener("click", () => {
-  metrics.exportJson("demo-01-camera");
+  metrics.exportJson("lab-01-camera");
 });
 
 function shortDeviceInfo(): string {
