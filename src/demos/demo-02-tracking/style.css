@@ -1,17 +1,25 @@
 /* Demo-02-specific layout: the a-scene renders full-bleed (video + AR
-   canvas), our HTML overlay sits on top, same pattern as Demo 01. */
-
-a-scene {
-  position: fixed;
-  inset: 0;
-  width: 100%;
-  height: 100%;
+   canvas), our HTML overlay sits on top, same pattern as Demo 01.
+   No `embedded` attribute on <a-scene> — that mode sizes the scene to its
+   parent's box, and our parent has no explicit height, which produced a
+   collapsed/oversized canvas. Without `embedded`, A-Frame's own fullscreen
+   mode sizes against the viewport directly, which is what we want. The
+   !important here is a deliberate safety net: A-Frame injects its own
+   stylesheet at runtime, and we're pinning this instead of trusting
+   load-order/specificity against it. */
+#ar-scene {
+  position: fixed !important;
+  inset: 0 !important;
+  width: 100vw !important;
+  height: 100dvh !important;
   z-index: 0;
 }
 
 .demo-content {
-  position: relative;
+  position: fixed;
+  inset: 0;
   z-index: 1;
+  overflow-y: auto;
 }
 
 .demo-content .page {
