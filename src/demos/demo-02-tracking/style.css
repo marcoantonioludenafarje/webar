@@ -1,19 +1,16 @@
 /* Demo-02-specific layout: the a-scene renders full-bleed (video + AR
    canvas), our HTML overlay sits on top, same pattern as Demo 01.
-   No `embedded` attribute on <a-scene> — that mode sizes the scene to its
-   parent's box, and our parent has no explicit height, which produced a
-   collapsed/oversized canvas. Without `embedded`, A-Frame's own fullscreen
-   mode sizes against the viewport directly, which is what we want. The
-   !important here is a deliberate safety net: A-Frame injects its own
-   stylesheet at runtime, and we're pinning this instead of trusting
-   load-order/specificity against it. */
-#ar-scene {
-  position: fixed !important;
-  inset: 0 !important;
-  width: 100vw !important;
-  height: 100dvh !important;
-  z-index: 0;
-}
+   No `embedded` attribute on <a-scene>, and deliberately NO custom CSS on
+   #ar-scene either — MindAR's own quickstart example
+   (hiukim.github.io/mind-ar-js-doc/quick-start/overview) uses zero custom
+   scene CSS and works. MindAR positions its camera <video> at
+   `z-index: -2` directly under <body>, relying on the AR canvas above it
+   being transparent; adding our own `#ar-scene { z-index: 0 }` here
+   previously introduced an explicit stacking boundary MindAR doesn't
+   expect, which broke that video/canvas compositing (confirmed via
+   physical test: video had live frames but was fully hidden behind an
+   opaque canvas). Let A-Frame's default non-embedded fullscreen mode own
+   #ar-scene's sizing/stacking entirely. */
 
 .demo-content {
   position: fixed;
