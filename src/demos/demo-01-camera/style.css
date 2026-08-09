@@ -1,0 +1,74 @@
+/* Demo-01-specific layout: full-bleed camera preview with controls on top. */
+
+.camera-preview {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  background: #000;
+  z-index: 0;
+}
+
+.camera-preview[hidden] {
+  display: none;
+}
+
+.demo-content {
+  position: relative;
+  z-index: 1;
+}
+
+.demo-content .page {
+  min-height: 100vh;
+  min-height: 100dvh;
+  justify-content: space-between;
+}
+
+.top-section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.bottom-section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-bottom: 8px;
+}
+
+.stat-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px 16px;
+}
+
+.stat-grid .stat-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-dim);
+}
+
+.stat-grid .stat-value {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 16px;
+}
+
+.error-box {
+  border: 1px solid var(--danger);
+  background: rgba(248, 81, 73, 0.1);
+  color: var(--text);
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-size: 13px;
+}
+
+.error-box .error-code {
+  color: var(--danger);
+  font-weight: 700;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  display: block;
+  margin-bottom: 2px;
+}
