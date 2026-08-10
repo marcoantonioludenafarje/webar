@@ -1,7 +1,7 @@
 # LAB A2 — Image Tracking
 
 > Sigue la plantilla de [laboratorios/PLAYBOOK.md](https://github.com/marcoantonioludenafarje/laboratorios/blob/master/PLAYBOOK.md) §6.
-> Código: [`src/labs/lab-02-image-tracking/`](../../../src/labs/lab-02-image-tracking/) · Sitio en vivo: [Launch](https://marcoantonioludenafarje.github.io/webar-lab/src/labs/lab-02-image-tracking/index.html)
+> Código: [`src/labs/lab-02-image-tracking/`](../../../src/labs/lab-02-image-tracking/) · Sitio en vivo: [Launch](https://marcoantonioludenafarje.github.io/webar/src/labs/lab-02-image-tracking/index.html)
 > Depende de: [LAB A1 — Camera](../lab-01-camera/) (validado a nivel de código; pendiente de prueba física).
 
 ## 1. Contexto teórico

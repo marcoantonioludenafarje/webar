@@ -40,7 +40,7 @@ dispositivo físico.
 
 ## Cómo probar en tu celular (paso a paso, sin saber código)
 
-1. Abre en tu celular: **https://marcoantonioludenafarje.github.io/webar-lab/**
+1. Abre en tu celular: **https://marcoantonioludenafarje.github.io/webar/**
 2. Toca el lab que quieras (`Launch`).
 3. Dale **Start**, acepta el permiso de cámara.
 4. Sigue los "Pasos manuales" de la sección 5 del `README.md` de ese lab

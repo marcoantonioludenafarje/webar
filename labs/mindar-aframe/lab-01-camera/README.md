@@ -1,7 +1,7 @@
 # LAB A1 — Camera
 
 > Sigue la plantilla de [laboratorios/PLAYBOOK.md](https://github.com/marcoantonioludenafarje/laboratorios/blob/master/PLAYBOOK.md) §6.
-> Código: [`src/labs/lab-01-camera/`](../../../src/labs/lab-01-camera/) · Sitio en vivo: [Launch](https://marcoantonioludenafarje.github.io/webar-lab/src/labs/lab-01-camera/index.html)
+> Código: [`src/labs/lab-01-camera/`](../../../src/labs/lab-01-camera/) · Sitio en vivo: [Launch](https://marcoantonioludenafarje.github.io/webar/src/labs/lab-01-camera/index.html)
 
 ## 1. Contexto teórico
 
