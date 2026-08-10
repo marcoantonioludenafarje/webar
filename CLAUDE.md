@@ -1,10 +1,11 @@
 # WebAR Lab
 
-Esta exploración sigue la metodología general en
-[laboratorios/PLAYBOOK.md](https://github.com/marcoantonioludenafarje/laboratorios/blob/master/PLAYBOOK.md)
-— este archivo **no la repite**, solo cubre lo específico de WebAR. Ver
-también [laboratorios/CATALOGO.md](https://github.com/marcoantonioludenafarje/laboratorios/blob/master/CATALOGO.md)
-antes de construir algo que ya podría estar resuelto en otra exploración.
+> **Antes de cualquier otra cosa**: lee
+> `C:\repositorios\ideas_negocio\laboratorios\PLAYBOOK.md` y `CATALOGO.md`.
+> Esta exploración los sigue; este archivo **no los repite**, solo cubre lo
+> específico de WebAR. (Espejo en GitHub si no tienes el filesystem local:
+> [PLAYBOOK.md](https://github.com/marcoantonioludenafarje/laboratorios/blob/master/PLAYBOOK.md),
+> [CATALOGO.md](https://github.com/marcoantonioludenafarje/laboratorios/blob/master/CATALOGO.md).)
 
 - **Objetivo / preguntas / visión**: [OBJECTIVE.md](./OBJECTIVE.md)
 - **Qué labs existen, en qué orden, qué preguntan**: [ROADMAP.md](./ROADMAP.md)
