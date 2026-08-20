@@ -42,15 +42,20 @@ dispositivo físico.
 
 1. Abre en tu celular: **https://marcoantonioludenafarje.github.io/webar/**
 2. Toca el lab que quieras (`Launch`).
-3. Dale **Start**, acepta el permiso de cámara.
-4. Sigue los "Pasos manuales" de la sección 5 del `README.md` de ese lab
-   (en `labs/mindar-aframe/lab-NN-*/README.md`).
-5. Para labs de tracking (A2+), necesitas la imagen del target en **otra
-   pantalla** o impresa — el link directo está en el README de ese lab.
-6. Cuenta lo que viste — o escríbelo directo en la sección "8. Reflexiones"
-   del README del lab.
+3. Para labs de tracking (A2+), ten el target a mano: impreso o en **otra
+   pantalla** — el link directo está en el README de ese lab.
+4. Toca **Sesion guiada + reporte** y acepta el permiso de cámara.
+5. Segui las instrucciones que aparecen abajo, una por vez. Los pasos que
+   el sistema puede medir solo (distancia, ángulo, luz, movimiento) avanzan
+   cuando la condición se cumple; los que no, te preguntan.
+6. Al terminar, toca **Descargar reporte** — bajan dos archivos: el JSON
+   con la evidencia cruda y un `.md` listo para pegar.
 
-No necesitas saber programar para esto — solo seguir los pasos y observar.
+No necesitas saber programar ni anotar nada a mano. Si un dato te exige
+transcribirlo, eso es un bug del arnés (`src/core/evidence/`), no una
+tarea tuya — ver [PLAYBOOK §23.4](https://github.com/marcoantonioludenafarje/laboratorios/blob/master/PLAYBOOK.md).
+
+El botón **Start** manual sigue estando para explorar sin sesión guiada.
 
 ## Estructura del proyecto
 
@@ -105,10 +110,18 @@ reemplaza `card.mind` (o apunta `mindar-image="imageTargetSrc: ..."` en
 
 ## Registrar resultados
 
-Tras probar físicamente un lab en un dispositivo real, llena la sección
-"8. Reflexiones del laboratorio" de su `README.md` en `labs/mindar-aframe/`.
+La sesión guiada emite el reporte; ese reporte alimenta la sección
+"8. Reflexiones del laboratorio" del `README.md` del lab en
+`labs/mindar-aframe/`.
+
 No fabricar resultados — que el código corra en el navegador no es lo
-mismo que una validación AR exitosa en el celular.
+mismo que una validación AR exitosa en el celular. Un campo `no medido` en
+el reporte se queda `no medido`.
+
+Lo que falta validar está en
+[VALIDACION-PENDIENTE.md](./VALIDACION-PENDIENTE.md). Esa cola no bloquea
+el avance del repo (PLAYBOOK §23): un lab queda `IMPLEMENTADO` hasta que
+alguien lo prueba en hardware real, nunca `CERRADO`.
 
 ## Build
 

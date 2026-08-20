@@ -1,6 +1,7 @@
 import { CameraService, CameraError } from "../../core/camera/CameraService";
 import { MetricsService } from "../../core/metrics/MetricsService";
 import { DebugOverlay } from "../../core/metrics/DebugOverlay";
+import { attachGuidedSession } from "./guided";
 
 /**
  * LAB A1 — Camera (see ./README.md for the full theory/hypothesis/
@@ -65,6 +66,7 @@ app.innerHTML = `
           <button class="btn btn-primary" id="btn-start">Start</button>
           <button class="btn btn-danger" id="btn-stop" disabled>Stop</button>
         </div>
+        <button class="btn btn-primary" id="btn-guided">Sesion guiada + reporte</button>
         <button class="btn" id="btn-export">Export metrics JSON</button>
       </div>
     </div>
@@ -81,6 +83,7 @@ const errorSlot = app.querySelector<HTMLElement>("#error-slot")!;
 const btnStart = app.querySelector<HTMLButtonElement>("#btn-start")!;
 const btnStop = app.querySelector<HTMLButtonElement>("#btn-stop")!;
 const btnExport = app.querySelector<HTMLButtonElement>("#btn-export")!;
+const btnGuided = app.querySelector<HTMLButtonElement>("#btn-guided")!;
 
 debugOverlay.mount();
 metrics.startFpsLoop();
@@ -160,6 +163,55 @@ btnStop.addEventListener("click", () => {
 btnExport.addEventListener("click", () => {
   metrics.exportJson("lab-01-camera");
 });
+
+/**
+ * Guided evidence session (PLAYBOOK §23.4). Purely additive — the manual
+ * Start/Stop flow above is unchanged, and the session drives it through
+ * the same button rather than duplicating the camera logic.
+ */
+const guided = attachGuidedSession({
+  metrics,
+  videoEl,
+  isStreaming: () => camera.isActive(),
+  ensureStarted: async () => {
+    if (camera.isActive()) return;
+    btnStart.click();
+    // The click handler is async; wait for the stream rather than racing
+    // the recorder against permission being granted.
+    await waitFor(() => camera.isActive(), 30_000);
+  },
+});
+
+btnGuided.addEventListener("click", async () => {
+  btnGuided.disabled = true;
+  btnGuided.textContent = "Sesion en curso";
+  try {
+    await guided.start();
+  } catch (err) {
+    showError(
+      err instanceof CameraError
+        ? err
+        : new CameraError("unknown", err instanceof Error ? err.message : String(err)),
+    );
+    btnGuided.disabled = false;
+    btnGuided.textContent = "Sesion guiada + reporte";
+  }
+});
+
+/** Poll until `predicate` holds or the timeout elapses. Resolves either way. */
+function waitFor(predicate: () => boolean, timeoutMs: number): Promise<void> {
+  return new Promise((resolve) => {
+    const startedAt = performance.now();
+    const check = () => {
+      if (predicate() || performance.now() - startedAt > timeoutMs) {
+        resolve();
+        return;
+      }
+      window.setTimeout(check, 150);
+    };
+    check();
+  });
+}
 
 function shortDeviceInfo(): string {
   const ua = navigator.userAgent;

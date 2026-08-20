@@ -60,16 +60,29 @@ MindAR image tracking (este lab)
 
 ## 5. Pasos manuales
 
+**Ruta recomendada — sesión guiada** (~10 min, no hay que anotar nada):
+
 1. Imprimir `public/targets/lab-02-image-tracking/card.png`, o mostrarlo
    en otra pantalla.
-2. Abrir el lab en el celular, dar **Start**, aceptar permiso de cámara.
-3. Apuntar al target — confirmar transición SEARCHING → TARGET FOUND.
-4. Sacar el target de cuadro y volver a meterlo — confirmar TARGET LOST se
-   cuenta y la reacquisición funciona.
-5. Recorrer la matriz de prueba física (§6).
-6. **Export metrics JSON** después de cada condición si es útil.
+2. Abrir el lab en el celular y tocar **Sesion guiada + reporte**.
+3. Seguir las instrucciones en pantalla, una por vez.
+4. Tocar **Descargar reporte** al final — bajan el JSON de evidencia y un
+   `.md` con la matriz de §6 ya llena.
+
+El arnés (`src/core/evidence/` + `guided.ts` de este lab) decide solo
+ocho de las once condiciones de §6, midiendo la pose de MindAR, la
+luminancia del frame y el acelerómetro. Las otras tres —oclusión
+parcial, target en movimiento y la calidad percibida— te las pregunta,
+porque ningún sensor acá puede distinguirlas.
+
+**Ruta manual** (para explorar sin sesión guiada): dar **Start**, apuntar
+al target, confirmar SEARCHING → TARGET FOUND → TARGET LOST, y usar
+**Export metrics JSON** cuando sirva.
 
 ## 6. Qué debemos observar — matriz de prueba física
+
+La sesión guiada llena esta tabla y la emite en el reporte descargable.
+Se transcribe acá al cerrar el lab, con los valores medidos.
 
 | Condición | Resultado |
 |---|---|

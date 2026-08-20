@@ -1,6 +1,8 @@
 import { MetricsService } from "../../core/metrics/MetricsService";
 import { DebugOverlay } from "../../core/metrics/DebugOverlay";
 import { EventLog } from "../../core/metrics/EventLog";
+import { attachGuidedSession } from "./guided";
+import type { Object3DLike } from "./pose";
 
 /**
  * LAB A2 — Image Tracking (see ./README.md for the full theory/hypothesis/
@@ -88,6 +90,7 @@ app.innerHTML = `
           <button class="btn btn-primary" id="btn-start" disabled>Loading…</button>
           <button class="btn btn-danger" id="btn-stop" disabled>Stop</button>
         </div>
+        <button class="btn btn-primary" id="btn-guided">Sesion guiada + reporte</button>
         <button class="btn" id="btn-export">Export metrics JSON</button>
       </div>
     </div>
@@ -103,6 +106,7 @@ const errorSlot = app.querySelector<HTMLElement>("#error-slot")!;
 const btnStart = app.querySelector<HTMLButtonElement>("#btn-start")!;
 const btnStop = app.querySelector<HTMLButtonElement>("#btn-stop")!;
 const btnExport = app.querySelector<HTMLButtonElement>("#btn-export")!;
+const btnGuided = app.querySelector<HTMLButtonElement>("#btn-guided")!;
 
 const sceneEl = document.querySelector<HTMLElement & { systems: Record<string, any>; hasLoaded: boolean }>(
   "#ar-scene",
@@ -252,6 +256,35 @@ btnStop.addEventListener("click", () => {
 
 btnExport.addEventListener("click", () => {
   metrics.exportJson("lab-02-image-tracking");
+});
+
+/**
+ * Guided evidence session (PLAYBOOK §23.4). Attached additively: it only
+ * adds listeners and probes, so if anything here breaks, the lab itself
+ * still runs exactly as before.
+ */
+const guided = attachGuidedSession({
+  metrics,
+  log,
+  sceneEl,
+  targetEl: targetEl as HTMLElement & { object3D?: Object3DLike },
+  ensureStarted: () => {
+    // btnStop is only enabled while tracking runs, which makes it the
+    // cheapest reliable "is AR already started?" signal available.
+    if (btnStop.disabled) btnStart.click();
+  },
+});
+
+btnGuided.addEventListener("click", async () => {
+  btnGuided.disabled = true;
+  btnGuided.textContent = "Sesion en curso";
+  try {
+    await guided.start();
+  } catch (err) {
+    showError(err instanceof Error ? err.message : String(err));
+    btnGuided.disabled = false;
+    btnGuided.textContent = "Sesion guiada + reporte";
+  }
 });
 
 // Stop tracking cleanly if the user navigates away mid-session.

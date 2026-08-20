@@ -57,6 +57,17 @@ base.
 
 ## 5. Pasos manuales
 
+**Ruta recomendada — sesión guiada** (~3 min): abrir el lab en el celular,
+tocar **Sesion guiada + reporte**, seguir las instrucciones y descargar el
+reporte al final. El arnés mide solo la curva de FPS (incluida la
+degradación entre el primer y el último quinto de la sesión), la
+resolución y facing reales del track, y si el navegador mata el stream en
+segundo plano. Te pregunta lo que no puede ver: si la imagen es de la
+cámara trasera, si el preview seguía vivo al volver de background, y si
+notaste calentamiento o tirones.
+
+**Ruta manual**, equivalente paso a paso:
+
 1. Abrir el lab en el celular (no alcanza con desktop — ver §6).
 2. Dar **Start**, aceptar el permiso de cámara.
 3. Confirmar que es la cámara trasera, no la frontal.

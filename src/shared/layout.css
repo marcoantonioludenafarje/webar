@@ -218,3 +218,102 @@ body {
   color: #9aa7b5;
   line-height: 1.4;
 }
+
+/*
+ * Guided evidence session (src/core/evidence/). Overlays the bottom of the
+ * screen while a session runs: the operator is holding a phone pointed at
+ * a target, so the instruction has to be readable and the buttons hittable
+ * without looking away for long. Sits above the debug overlay on purpose —
+ * during a guided run the instruction matters more than the stats.
+ */
+.guided-panel {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 50;
+  padding: 14px 16px calc(14px + env(safe-area-inset-bottom));
+  background: rgba(11, 14, 18, 0.94);
+  border-top: 1px solid var(--border);
+  backdrop-filter: blur(8px);
+}
+
+.guided-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 10px;
+  margin-bottom: 6px;
+}
+
+.guided-progress {
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.guided-fills {
+  font-size: 11px;
+  color: var(--text-dim);
+  text-align: right;
+}
+
+.guided-label {
+  font-size: 17px;
+  line-height: 1.35;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.guided-hint {
+  font-size: 14px;
+  color: var(--text-dim);
+  font-variant-numeric: tabular-nums;
+  margin-bottom: 8px;
+}
+
+.guided-bar {
+  height: 6px;
+  border-radius: 3px;
+  background: var(--surface-alt);
+  overflow: hidden;
+  margin-bottom: 10px;
+}
+
+.guided-bar-fill {
+  height: 100%;
+  background: var(--accent);
+  /* Matches the sampling period so the bar advances smoothly instead of
+     stepping twice a second. */
+  transition: width 0.5s linear;
+}
+
+.guided-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.guided-actions .btn {
+  flex: 1 1 auto;
+  min-height: 46px;
+}
+
+.guided-note {
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--surface-alt);
+  color: var(--text);
+  font-family: inherit;
+  font-size: 14px;
+  resize: vertical;
+}
+
+/* Keep the debug overlay clear of the panel while a session is running. */
+.guided-running .debug-overlay {
+  bottom: auto;
+}

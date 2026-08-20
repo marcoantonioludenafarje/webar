@@ -24,6 +24,19 @@ Máximo 5 labs para esta tecnología — no 3, porque el objetivo final
 pena aislar antes de integrarlas (cámara, tracking, render 3D,
 interacción, gamificación son válidas por separado).
 
+## Estado de validación
+
+Los labs A1 y A2 están **implementados y desplegados**, no validados: nadie
+los probó todavía en un celular. Ese pendiente vive en
+[VALIDACION-PENDIENTE.md](./VALIDACION-PENDIENTE.md) y **no bloquea** el
+avance del roadmap (PLAYBOOK §23) — con el límite de §23.5: A3 puede
+implementarse, pero no puede asumir en su diseño una estabilidad de
+tracking que A2 todavía no confirmó.
+
+Para que esa validación cueste lo menos posible, ambos labs traen una
+**sesión guiada** (`src/core/evidence/`) que captura la evidencia sola y
+emite un reporte descargable.
+
 ## Demos integrales
 
 | Demo | Nombre | Combina | Objetivo |

@@ -46,9 +46,19 @@ analytics de producción, microservicios, Kubernetes, SSR.
 - **Los labs ya completados nunca se rompen.** El launcher (`index.html` /
   `src/launcher/`) debe seguir listando todo lab implementado.
 - **No fabricar resultados físicos.** Las secciones "Reflexiones"/"Qué
-  observamos" de cada `labs/*/README.md` las llena el humano tras probar
-  en un dispositivo real — Claude prepara la plantilla y la
-  instrumentación, no el resultado.
+  observamos" de cada `labs/*/README.md` se llenan con evidencia de una
+  prueba real — Claude prepara la plantilla y la instrumentación, no el
+  resultado.
+- **La validación humana no bloquea** (PLAYBOOK §23). Seguir avanzando
+  hasta donde la PoC esté técnicamente completa; lo que falte confirmar
+  va a [VALIDACION-PENDIENTE.md](./VALIDACION-PENDIENTE.md), no detiene
+  el trabajo. Un lab queda `IMPLEMENTADO` hasta que alguien lo pruebe en
+  hardware real — nunca `CERRADO`. Excepción (§23.5): parar si el
+  siguiente lab **solo tiene sentido** si la prueba pendiente sale bien.
+- **Abaratar la validación es trabajo de primera clase.** El humano es el
+  recurso escaso: si un lab exige anotar mediciones a mano, primero se
+  instrumenta para que el sistema las capture y emita un reporte
+  descargable. Ver `src/core/evidence/`.
 
 ## 5. Convenciones de código
 
@@ -79,7 +89,7 @@ chore(repo): <reorg/infra>
 3. Plantear el plan de implementación más pequeño posible.
 4. No modificar labs no relacionados.
 5. Implementar, correr `npm run build`.
-6. Reportar qué cambió y qué falta probar físicamente.
+6. Reportar qué cambió y agregar lo no validado a `VALIDACION-PENDIENTE.md`.
 
 No afirmar que una capacidad AR móvil "funciona" sin que se haya validado
 físicamente — que el código corra en el navegador no es lo mismo que
