@@ -1,0 +1,75 @@
+/* LAB A4 — the shared AR overlay chrome is in src/shared/ar-overlay.css.
+   This file covers the two things specific to measuring taps. */
+
+/*
+   The overlay must let taps through to the AR canvas.
+
+   In the other labs .demo-content covers the viewport and swallows every
+   touch, which is harmless when nothing below it is interactive. Here the
+   thing being measured *is* below it, so the container goes
+   pointer-events: none and only the actual chrome (.page > *) takes input
+   again — that rule already lives in ar-overlay.css.
+
+   With this in place, a pointerdown whose target is the <canvas> is
+   unambiguously a tap aimed at the character, which is what makes the
+   hit-rate figure trustworthy: no button press can be miscounted as a
+   missed tap. */
+.demo-content {
+  pointer-events: none;
+}
+
+/* Scrolling still works: the touch lands on .bottom-section (which has
+   pointer-events: auto) and scroll chaining walks up to .demo-content's
+   own overflow, regardless of its pointer-events value. */
+
+.score-badge {
+  position: fixed;
+  top: calc(12px + env(safe-area-inset-top));
+  right: 12px;
+  z-index: 2;
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: rgba(22, 27, 34, 0.9);
+  border: 1px solid var(--border);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 18px;
+  pointer-events: none;
+}
+
+.score-badge[data-pulse="true"] {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+/*
+   Every tap leaves a dot: green for a hit, red for a miss. Seen together
+   they show the shape of the hit area — a cluster of red just below the
+   character means something quite different from red scattered
+   everywhere, and that distinction is invisible in a hit-rate percentage.
+*/
+.tap-marker {
+  position: fixed;
+  width: 18px;
+  height: 18px;
+  margin: -9px 0 0 -9px;
+  border-radius: 50%;
+  border: 2px solid var(--danger);
+  z-index: 2;
+  pointer-events: none;
+  animation: tap-fade 1.4s ease-out forwards;
+}
+
+.tap-marker[data-hit="true"] {
+  border-color: var(--accent);
+}
+
+@keyframes tap-fade {
+  from {
+    opacity: 0.95;
+    transform: scale(0.6);
+  }
+  to {
+    opacity: 0;
+    transform: scale(1.6);
+  }
+}

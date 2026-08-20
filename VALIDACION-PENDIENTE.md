@@ -79,6 +79,26 @@ invertido — decilo y es un cambio de un carácter.
 
 ---
 
+## Bloque 3 — LAB A4 en celular
+
+| | |
+|---|---|
+| **Estado** | ⏳ pendiente |
+| **Requiere** | el mismo target de los bloques anteriores |
+| **Tiempo estimado** | ~5 min |
+| **Desbloquea** | A4 → y con eso LAB A5 (mini-juego) y DEMO 4 |
+| **Link** | https://marcoantonioludenafarje.github.io/webar/src/labs/lab-04-interaction/index.html |
+
+Tres tandas de toques: al personaje, deliberadamente al lado, y desde un
+metro. Cada toque deja un punto verde o rojo en pantalla, así que la forma
+del área de acierto se ve mientras probás.
+
+Lo que te pregunta: si la respuesta se sintió inmediata (la latencia medida
+no incluye composición ni refresco de pantalla, así que el número real es
+mayor), si vibró, y si tuviste que apuntar con cuidado.
+
+---
+
 ## Historial
 
 *(los bloques validados se mueven acá con la fecha y el link a su finding)*

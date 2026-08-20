@@ -15,7 +15,7 @@ const labs: Entry[] = [
   { id: "A1", title: "Camera", path: "./src/labs/lab-01-camera/index.html" },
   { id: "A2", title: "Image Tracking", path: "./src/labs/lab-02-image-tracking/index.html" },
   { id: "A3", title: "3D Character", path: "./src/labs/lab-03-3d-character/index.html" },
-  { id: "A4", title: "Interaction" },
+  { id: "A4", title: "Interaction", path: "./src/labs/lab-04-interaction/index.html" },
   { id: "A5", title: "AR Game" },
 ];
 

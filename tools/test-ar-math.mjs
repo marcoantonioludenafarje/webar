@@ -42,6 +42,7 @@ async function load(entry) {
 const { readPose, parseTargetWidthCm } = await load("src/core/ar/TargetPose.ts");
 const { JitterProbe } = await load("src/core/ar/JitterProbe.ts");
 const { summariseFps } = await load("src/core/evidence/EvidenceRecorder.ts");
+const { toNormalisedDevice, summariseTaps } = await load("src/core/ar/ScreenRaycaster.ts");
 
 let failures = 0;
 let current = "";
@@ -170,6 +171,48 @@ check("degradado: retencion", decaying.retentionPct, near(58, 1), "~58");
 check("degradado: minimo", decaying.min, 30, "30");
 check("degradado: p5 < mediana", decaying.p5 < decaying.median, true, "true");
 check("sesion demasiado corta", summariseFps([{ fps: 60 }, { fps: 60 }]), isNull, "null");
+
+// ── Raycasting de pantalla ─────────────────────────────────────────────
+
+const VIEWPORT = { width: 400, height: 800 };
+const ndc = (x, y) => toNormalisedDevice(x, y, VIEWPORT);
+
+section("Raycaster — coordenadas normalizadas");
+check("centro", ndc(200, 400), (v) => v.x === 0 && v.y === 0, "{x:0,y:0}");
+check("esquina superior izquierda", ndc(0, 0), (v) => v.x === -1 && v.y === 1, "{x:-1,y:1}");
+check("esquina inferior derecha", ndc(400, 800), (v) => v.x === 1 && v.y === -1, "{x:1,y:-1}");
+// El eje Y va invertido respecto de la pantalla. Si este signo se rompe,
+// los toques aciertan en la mitad equivocada y en el celular se lee como
+// "el hit-test es poco confiable", no como un bug.
+check("Y invertido respecto de pantalla", ndc(200, 200).y > 0, true, "positivo arriba del centro");
+check("X no invertido", ndc(100, 400).x < 0, true, "negativo a la izquierda");
+
+// ── Resumen de toques ──────────────────────────────────────────────────
+
+const tap = (hit, latencyMs, pixelDistance = null) => ({
+  hit, latencyMs, pixelDistance, screenX: 0, screenY: 0,
+  objectX: 0, objectY: 0, hitDistanceUnits: hit ? 2 : null,
+});
+
+section("Toques — tasa de acierto");
+check("todos aciertan", summariseTaps([tap(true, 40), tap(true, 45)]).hitRatePct, 100, "100");
+check("ninguno acierta", summariseTaps([tap(false, 40, 60), tap(false, 45, 80)]).hitRatePct, 0, "0");
+check("mitad y mitad", summariseTaps([tap(true, 40), tap(false, 45, 60)]).hitRatePct, 50, "50");
+check("sin toques", summariseTaps([]), (v) => v.taps === 0 && v.hitRatePct === 0 && v.medianLatencyMs === null, "vacío seguro");
+
+section("Toques — latencia");
+// Mediana, no promedio: una pausa de GC en un solo toque arrastraría un
+// promedio a un valor que nadie experimentó.
+const outlier = summariseTaps([tap(true, 40), tap(true, 42), tap(true, 44), tap(true, 46), tap(true, 3000)]);
+check("mediana ignora el outlier", outlier.medianLatencyMs, (v) => v >= 40 && v <= 46, "40–46");
+check("p90 lo expone", outlier.p90LatencyMs, 3000, "3000");
+check("latencias ausentes", summariseTaps([tap(true, null), tap(true, null)]).medianLatencyMs, isNull, "null");
+
+section("Toques — distancia de los fallos");
+const misses = summariseTaps([tap(false, 40, 120), tap(false, 40, 35), tap(false, 40, 80), tap(true, 40)]);
+check("fallo más cercano", misses.closestMissPx, 35, "35");
+check("mediana de fallos", misses.medianMissDistancePx, (v) => v >= 35 && v <= 120, "35–120");
+check("los aciertos no cuentan como fallo", misses.hits, 1, "1");
 
 // ── Done ───────────────────────────────────────────────────────────────
 
