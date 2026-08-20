@@ -123,9 +123,14 @@ Lo que falta validar está en
 el avance del repo (PLAYBOOK §23): un lab queda `IMPLEMENTADO` hasta que
 alguien lo prueba en hardware real, nunca `CERRADO`.
 
-## Build
+## Build y verificación
 
 ```bash
-npm run build
-npm run preview
+npm run build     # tsc estricto + vite build
+npm test          # matemática de pose, jitter y tendencia de FPS
+npm run models    # regenera y valida los GLB de LAB A3
 ```
+
+`npm test` cubre los cálculos de los que dependen las conclusiones de los
+labs. No reemplaza la validación física: que la matemática sea correcta no
+significa que la capacidad AR funcione en un celular (PLAYBOOK §23.2).

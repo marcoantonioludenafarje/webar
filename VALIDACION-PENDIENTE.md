@@ -47,6 +47,38 @@ incomodidad, calentamiento del teléfono.
 
 ---
 
+## Bloque 2 — LAB A3 en celular
+
+| | |
+|---|---|
+| **Estado** | ⏳ pendiente |
+| **Requiere** | el mismo target del bloque 1 |
+| **Tiempo estimado** | ~6 min |
+| **Desbloquea** | A3 → y con eso el presupuesto de assets para A4/A5 |
+| **Link** | https://marcoantonioludenafarje.github.io/webar/src/labs/lab-03-3d-character/index.html |
+
+Se puede encadenar con el bloque 1 en la misma salida — mismo target, mismo
+teléfono. La sesión **cambia los tres modelos sola** y mide carga,
+transferencia, FPS y jitter de cada uno.
+
+Lo que te pregunta: si el personaje se ve parado (la orientación no es
+deducible de la pose), si el cambio de animación pega un salto, si tembló a
+ojo, y si el teléfono se calentó.
+
+⚠ Si tu teléfono no expone acelerómetro o le negás el permiso de
+movimiento, el reporte va a marcar `jitterGateEnforced: false`: las
+lecturas de jitter siguen sirviendo pero son evidencia más débil, porque no
+se pudo verificar que el teléfono estuviera quieto al medirlas.
+
+### Riesgo conocido, sin validar
+
+La orientación del personaje sobre la tarjeta (`rotation="90 0 0"`) se
+derivó de la convención de ejes de MindAR, no se vio funcionando. Si
+aparece **acostado sobre la tarjeta o hundido detrás**, el signo está
+invertido — decilo y es un cambio de un carácter.
+
+---
+
 ## Historial
 
 *(los bloques validados se mueven acá con la fecha y el link a su finding)*

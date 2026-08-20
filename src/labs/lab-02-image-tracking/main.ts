@@ -2,7 +2,7 @@ import { MetricsService } from "../../core/metrics/MetricsService";
 import { DebugOverlay } from "../../core/metrics/DebugOverlay";
 import { EventLog } from "../../core/metrics/EventLog";
 import { attachGuidedSession } from "./guided";
-import type { Object3DLike } from "./pose";
+import type { Object3DLike } from "../../core/ar/TargetPose";
 
 /**
  * LAB A2 — Image Tracking (see ./README.md for the full theory/hypothesis/

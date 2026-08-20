@@ -1,5 +1,7 @@
-/* lab-02-image-tracking layout: the a-scene renders full-bleed (video + AR
+/* Shared AR overlay layout: the a-scene renders full-bleed (video + AR
    canvas), our HTML overlay sits on top, same pattern as lab-01-camera.
+   Promoted out of lab-02 when lab-03 needed the same chrome (CLAUDE.md §4).
+   The comment below is a physically-validated finding — do not "clean it up".
    No `embedded` attribute on <a-scene>, and deliberately NO custom CSS on
    #ar-scene either — MindAR's own quickstart example
    (hiukim.github.io/mind-ar-js-doc/quick-start/overview) uses zero custom

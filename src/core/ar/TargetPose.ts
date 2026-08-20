@@ -1,12 +1,12 @@
 /**
- * Pose maths for LAB A2 — turns MindAR's tracked transform into the two
- * numbers the physical test matrix is actually about: how far away the
- * target is, and how obliquely we are looking at it.
+ * Pose maths for MindAR targets — turns the tracked transform into the two
+ * numbers the labs are actually about: how far away the target is, and how
+ * obliquely we are looking at it.
  *
- * Stays local to this lab rather than in `src/core/` on purpose: it is the
- * only place that knows about A-Frame entities, and this repo's rule is to
- * promote to core only once a second lab needs the same thing (CLAUDE.md
- * §4). LAB A3 will very likely be that second lab.
+ * Lived in `labs/lab-02-image-tracking/` until LAB A3 needed the same
+ * readings to measure jitter against distance. That second consumer is
+ * what promotes it to core under this repo's rule (CLAUDE.md §4) — not the
+ * suspicion, back in A2, that it would eventually be shared.
  *
  * Why this works: the scene's <a-camera> is pinned at the origin with
  * look-controls disabled, so MindAR moves the *anchor* rather than the

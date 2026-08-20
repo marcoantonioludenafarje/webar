@@ -5,7 +5,7 @@ import { buildReport, downloadReport } from "../../core/evidence/ReportBuilder";
 import type { EvidenceSample, Primitive } from "../../core/evidence/types";
 import type { MetricsService } from "../../core/metrics/MetricsService";
 import type { EventLog } from "../../core/metrics/EventLog";
-import { parseTargetWidthCm, readPose, type Object3DLike } from "./pose";
+import { parseTargetWidthCm, readPose, type Object3DLike } from "../../core/ar/TargetPose";
 
 /**
  * Guided evidence session for LAB A2.

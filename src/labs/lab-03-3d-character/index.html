@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>WebAR Lab / 3D Character</title>
+    <link rel="stylesheet" href="../../shared/layout.css" />
+    <link rel="stylesheet" href="../../shared/ar-overlay.css" />
+    <link rel="stylesheet" href="./style.css" />
+
+    <!--
+      Same two pinned vendor scripts as lab-02 — see that file for why they
+      load from a CDN as classic scripts rather than through Vite.
+
+      Note there is no aframe-extras here: clip playback is driven by our
+      own ModelAnimator over three's AnimationMixer (src/core/ar/), so this
+      lab adds zero dependencies over lab-02 despite doing more.
+    -->
+    <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
+  </head>
+  <body>
+    <a-scene
+      id="ar-scene"
+      mindar-image="imageTargetSrc: ../../../targets/lab-02-image-tracking/card.mind; autoStart: false; uiLoading: no; uiScanning: no; uiError: no;"
+      color-space="sRGB"
+      renderer="colorManagement: true, physicallyCorrectLights"
+      vr-mode-ui="enabled: false"
+      device-orientation-permission-ui="enabled: false"
+    >
+      <a-assets></a-assets>
+
+      <a-camera position="0 0 0" look-controls="enabled: false" cursor="fuse: false" raycaster="far: 10000"></a-camera>
+
+      <!--
+        Lighting is explicit rather than left to A-Frame's defaults: the
+        default rig changes between versions, and a lab comparing render
+        cost across model sizes needs the lighting held constant or the
+        FPS numbers are not comparable.
+      -->
+      <a-entity light="type: ambient; intensity: 0.75"></a-entity>
+      <a-entity light="type: directional; intensity: 0.6" position="1 2 1"></a-entity>
+
+      <a-entity id="target" mindar-image-target="targetIndex: 0">
+        <!--
+          The model sits on a wrapper entity so the dev controls can change
+          scale/position/rotation without touching the gltf-model entity
+          itself — reloading a model would otherwise discard the operator's
+          adjustments mid-session.
+        -->
+        <a-entity id="model-wrapper" position="0 0 0" rotation="0 0 0" scale="1 1 1">
+          <!--
+            +90 about X, not -90. MindAR's anchor frame has the target
+            image in the XY plane with +Z out of the card toward the
+            viewer, so a model built Y-up would otherwise lie flat on the
+            card. Rotating +90 about X maps its +Y onto +Z and stands it
+            up; -90 maps it to -Z and buries it behind the card.
+          -->
+          <a-entity id="character" rotation="90 0 0"></a-entity>
+        </a-entity>
+      </a-entity>
+    </a-scene>
+
+    <div id="app"></div>
+    <script type="module" src="./main.ts"></script>
+  </body>
+</html>

@@ -14,6 +14,7 @@ export default defineConfig({
         main: resolve(__dirname, "index.html"),
         lab01: resolve(__dirname, "src/labs/lab-01-camera/index.html"),
         lab02: resolve(__dirname, "src/labs/lab-02-image-tracking/index.html"),
+        lab03: resolve(__dirname, "src/labs/lab-03-3d-character/index.html"),
       },
     },
   },

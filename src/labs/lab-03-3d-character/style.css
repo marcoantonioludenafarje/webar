@@ -1,0 +1,70 @@
+/* LAB A3 dev controls. The shared AR overlay chrome lives in
+   src/shared/ar-overlay.css — this file only adds the adjustment panel.
+
+   Sliders and clip buttons are sized for a thumb: the operator is holding
+   the phone up at a printed card and cannot look down to aim precisely. */
+
+.control-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.control-row label {
+  flex: 0 0 62px;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-dim);
+}
+
+.control-row input[type="range"] {
+  flex: 1;
+  accent-color: var(--accent);
+  height: 28px;
+}
+
+.control-row .control-value {
+  flex: 0 0 46px;
+  text-align: right;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 13px;
+}
+
+.chip-row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+
+.chip {
+  flex: 1 1 auto;
+  min-height: 40px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--surface-alt);
+  color: var(--text-dim);
+  font-family: inherit;
+  font-size: 13px;
+}
+
+.chip[aria-pressed="true"] {
+  border-color: var(--accent);
+  color: var(--text);
+}
+
+.chip:disabled {
+  opacity: 0.5;
+}
+
+/* The size of an asset is the point of this lab, so it is shown on the
+   button rather than hidden in a tooltip. */
+.chip .chip-meta {
+  display: block;
+  font-size: 11px;
+  color: var(--text-dim);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}

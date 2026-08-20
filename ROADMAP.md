@@ -15,7 +15,7 @@ separado si A-Frame resulta una limitación real.
 |---|---|---|---|---|
 | A1 | [Camera](./labs/mindar-aframe/lab-01-camera/) | ¿Puede el navegador acceder y mantener de forma confiable un stream de cámara trasera? | Cámara estable, start/stop confiable, métricas visibles | Implementado, pendiente de prueba física |
 | A2 | [Image Tracking](./labs/mindar-aframe/lab-02-image-tracking/) | ¿Qué tan confiable es MindAR reconociendo y siguiendo una imagen impresa? | Estados SEARCHING/FOUND/LOST, matriz de distancia/ángulo/luz | Implementado, pendiente de prueba física |
-| A3 | 3D Character | ¿Puede un personaje 3D animado (GLB) mantenerse estable y performante anclado al target? | FPS, jitter, tiempo de carga documentados | No implementado |
+| A3 | [3D Character](./labs/mindar-aframe/lab-03-3d-character/) | ¿Puede un personaje 3D animado (GLB) mantenerse estable y performante anclado al target? | FPS, jitter, tiempo de carga documentados | Implementado, pendiente de prueba física |
 | A4 | Interaction | ¿Puede un objeto AR comportarse como un elemento de UI interactivo (tap, feedback)? | Latencia de interacción, tasa de fallos de raycasting | No implementado |
 | A5 | AR Game | ¿Puede correr un mini-juego AR simple (Catch AR) con buen framerate? | FPS antes/durante el juego, recuperación tras pérdida de tracking | No implementado |
 
@@ -26,12 +26,13 @@ interacción, gamificación son válidas por separado).
 
 ## Estado de validación
 
-Los labs A1 y A2 están **implementados y desplegados**, no validados: nadie
-los probó todavía en un celular. Ese pendiente vive en
+Los labs A1, A2 y A3 están **implementados y desplegados**, no validados:
+nadie los probó todavía en un celular. Ese pendiente vive en
 [VALIDACION-PENDIENTE.md](./VALIDACION-PENDIENTE.md) y **no bloquea** el
-avance del roadmap (PLAYBOOK §23) — con el límite de §23.5: A3 puede
-implementarse, pero no puede asumir en su diseño una estabilidad de
-tracking que A2 todavía no confirmó.
+avance del roadmap (PLAYBOOK §23) — con el límite de §23.5. A3 se
+implementó bajo ese límite: no asume ningún resultado de A2, mide la
+estabilidad del tracking con un personaje encima en vez de darla por
+sentada.
 
 Para que esa validación cueste lo menos posible, ambos labs traen una
 **sesión guiada** (`src/core/evidence/`) que captura la evidencia sola y
